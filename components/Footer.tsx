@@ -24,7 +24,7 @@ const legalLinks = [
 const Footer: React.FC = () => {
   const contactLink = createWhatsAppLink(DEFAULT_CONTACT_MESSAGE);
   return (
-    <footer className="bg-brand-gray border-t border-brand-light-gray">
+    <footer className="bg-brand-gray/80 backdrop-blur-sm border-t border-brand-light-gray/50">
       <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {/* Kolom Branding */}
@@ -52,8 +52,12 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Bagian Hak Cipta */}
-        <div className="mt-12 border-t border-brand-light-gray pt-8 text-center">
-            <p className="text-sm text-gray-500">&copy; {new Date().getFullYear()} Joki Line. All Rights Reserved. Dibuat dengan &hearts; untuk para pejuang deadline.</p>
+        <div className="mt-12 border-t border-brand-light-gray/50 pt-8 text-center">
+            <p className="text-sm text-gray-500">
+              &copy; {new Date().getFullYear()} Joki Line. All Rights Reserved. Dibuat dengan &hearts; untuk para pejuang deadline.
+              <span className="mx-2">|</span>
+              <a href="#/admin" className="hover:text-brand-cyan transition-colors">Admin</a>
+            </p>
         </div>
       </div>
     </footer>

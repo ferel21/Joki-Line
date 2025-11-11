@@ -3,7 +3,7 @@ import Testimonials from '../components/Testimonials';
 
 const TestimonialsPage: React.FC = () => {
   return (
-    <section id="testimoni" className="py-20 px-4 sm:px-6 lg:px-8 bg-brand-gray animate-fade-in-up">
+    <section id="testimoni" className="py-20 px-4 sm:px-6 lg:px-8 bg-brand-gray/50 backdrop-blur-sm animate-fade-in-up">
          <div className="container mx-auto">
              <h2 className="text-4xl lg:text-5xl font-bold text-center text-white mb-4 font-brand tracking-wider">
               Kata Mereka Tentang Kami

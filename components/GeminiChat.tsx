@@ -81,9 +81,9 @@ const GeminiChat: React.FC = () => {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <div className="bg-brand-gray border border-brand-light-gray rounded-xl shadow-2xl shadow-brand-cyan/10 flex flex-col h-[600px]">
+      <div className="bg-brand-gray/80 backdrop-blur-sm border border-brand-light-gray/50 rounded-xl shadow-2xl shadow-brand-cyan/10 flex flex-col h-[600px]">
         {/* Header Chat */}
-        <div className="p-4 border-b border-brand-light-gray flex justify-between items-center">
+        <div className="p-4 border-b border-brand-light-gray/50 flex justify-between items-center">
             <div className="flex-1 text-center">
                 <h3 className="font-bold text-white">Asisten Joki AI</h3>
                 <p className="text-xs text-gray-400">Dapatkan petunjuk untuk tugasmu</p>
@@ -119,7 +119,7 @@ const GeminiChat: React.FC = () => {
         )}
 
         {/* Input Form */}
-        <div className="p-4 border-t border-brand-light-gray mt-auto">
+        <div className="p-4 border-t border-brand-light-gray/50 mt-auto">
           <form onSubmit={handleSubmit}>
             <div className="relative">
               <input

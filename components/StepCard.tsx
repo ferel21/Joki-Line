@@ -17,7 +17,7 @@ const StepCard: React.FC<StepCardProps> = ({ step, index }) => {
     return (
         <div 
             ref={ref}
-            className={`text-center p-6 bg-brand-dark rounded-lg border border-brand-light-gray transition-all duration-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+            className={`text-center p-6 bg-brand-gray/70 backdrop-blur-sm rounded-lg border border-brand-light-gray/50 transition-all duration-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
             style={{ transitionDelay: `${index * 100}ms` }}
         >
             <div className="flex items-center justify-center h-20 w-20 rounded-full bg-brand-light-gray mx-auto mb-6 border-2 border-brand-cyan/50">

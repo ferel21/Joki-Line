@@ -33,7 +33,7 @@ const Header: React.FC = () => {
   const contactLink = createWhatsAppLink(DEFAULT_CONTACT_MESSAGE);
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-brand-gray/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'}`}>
+    <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-brand-gray/80 backdrop-blur-sm shadow-lg' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}

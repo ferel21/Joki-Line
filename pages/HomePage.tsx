@@ -9,11 +9,7 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <section className="relative text-center py-24 sm:py-32 md:py-40 px-4 sm:px-6 lg:px-8 overflow-hidden bg-brand-dark animate-fade-in-up">
-      {/* Efek visual latar belakang */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-brand-dark/80 to-brand-dark"></div>
-
+    <section className="relative text-center py-24 sm:py-32 md:py-40 px-4 sm:px-6 lg:px-8 overflow-hidden animate-fade-in-up">
       <div className="relative z-10 max-w-4xl mx-auto">
         {/* Ilustrasi */}
         <div className="flex justify-center items-center space-x-6 mb-8 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
@@ -49,16 +45,6 @@ const HomePage: React.FC = () => {
           </a>
         </div>
       </div>
-      
-       {/* Definisi gaya untuk grid pattern di latar belakang */}
-       <style>{`
-        .bg-grid-pattern {
-          background-image:
-            linear-gradient(to right, rgba(6, 182, 212, 0.1) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(6, 182, 212, 0.1) 1px, transparent 1px);
-          background-size: 40px 40px;
-        }
-      `}</style>
     </section>
   );
 };

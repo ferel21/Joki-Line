@@ -26,7 +26,7 @@ const PackageCard: React.FC<Package> = ({ name, price, description, features, is
 
   return (
     <div className={`
-      relative flex flex-col bg-brand-gray border border-brand-light-gray rounded-xl p-8 
+      relative flex flex-col bg-brand-gray/80 backdrop-blur-sm border border-brand-light-gray/50 rounded-xl p-8 
       transform transition-all duration-300 hover:scale-105 hover:border-brand-cyan
       ${isPopular ? `border-2 ${selectedColor.border} animate-glow` : ''}
     `}>

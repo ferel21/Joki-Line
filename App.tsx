@@ -6,6 +6,11 @@ import PackagesPage from './pages/PackagesPage';
 import HowItWorksPage from './pages/HowItWorksPage';
 import AskJokiPage from './pages/AskJokiPage';
 import TestimonialsPage from './pages/TestimonialsPage';
+import AdminLoginPage from './pages/AdminLoginPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
+
+// Gunakan environment variable untuk password, dengan fallback untuk development
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 
 /**
  * Komponen utama aplikasi Joki Line.
@@ -15,6 +20,9 @@ import TestimonialsPage from './pages/TestimonialsPage';
 const App: React.FC = () => {
   // Menggunakan window.location.hash untuk routing sisi klien sederhana
   const [route, setRoute] = useState(window.location.hash || '#/');
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean>(
+    () => !!sessionStorage.getItem('isAdminAuthenticated')
+  );
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -30,6 +38,22 @@ const App: React.FC = () => {
     };
   }, []);
 
+  const handleLogin = (password: string): boolean => {
+    if (password === ADMIN_PASSWORD) {
+      sessionStorage.setItem('isAdminAuthenticated', 'true');
+      setIsAdminAuthenticated(true);
+      return true;
+    }
+    return false;
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('isAdminAuthenticated');
+    setIsAdminAuthenticated(false);
+    // Arahkan kembali ke halaman utama setelah logout
+    window.location.hash = '#/';
+  };
+
   // Fungsi untuk merender komponen halaman yang sesuai
   const renderPage = () => {
     switch (route) {
@@ -41,6 +65,12 @@ const App: React.FC = () => {
         return <AskJokiPage />;
       case '#/testimoni':
         return <TestimonialsPage />;
+      case '#/admin':
+        return isAdminAuthenticated ? (
+          <AdminDashboardPage onLogout={handleLogout} />
+        ) : (
+          <AdminLoginPage onLogin={handleLogin} />
+        );
       case '#/':
       default:
         return <HomePage />;

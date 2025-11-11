@@ -17,7 +17,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, isActive
             transition-opacity duration-500 ease-in-out
             ${isActive ? 'opacity-100' : 'opacity-0'}
         `}>
-            <div className="bg-brand-dark p-8 rounded-xl border border-brand-light-gray flex flex-col max-w-2xl mx-auto text-center">
+            <div className="bg-brand-gray/80 backdrop-blur-sm p-8 rounded-xl border border-brand-light-gray/50 flex flex-col max-w-2xl mx-auto text-center">
                 <p className="text-gray-300 italic text-lg flex-grow">"{testimonial.quote}"</p>
                 <div className="mt-6 flex flex-col items-center">
                     <img 
