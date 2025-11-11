@@ -1,17 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
 
-// Mengambil API key dari environment variables.
-const API_KEY = process.env.API_KEY;
-
-// Validasi keberadaan API key saat aplikasi dimuat.
-if (!API_KEY) {
-    console.error("API_KEY is not set in environment variables. Please configure it.");
-    throw new Error("API_KEY is not set in environment variables");
-}
-
-// Inisialisasi instance GoogleGenAI dengan API key.
-const ai = new GoogleGenAI({ apiKey: API_KEY });
-
 /**
  * Instruksi sistem untuk model AI Gemini.
  * Ini menetapkan persona, tujuan, batasan, dan gaya bahasa AI.
@@ -33,16 +21,37 @@ Your Core Directives:
 Persona: You are a smart senior student who is great at explaining things and is always willing to help juniors. You are patient and positive.
 `;
 
+
+/**
+ * Lazily initializes and returns the GoogleGenAI instance.
+ * This prevents the app from crashing on load if the API key is missing.
+ * @returns {GoogleGenAI} The initialized GoogleGenAI instance.
+ * @throws {Error} If the API_KEY is not set.
+ */
+const getAIClient = (): GoogleGenAI => {
+    const API_KEY = process.env.API_KEY;
+
+    // Validasi keberadaan API key saat fungsi dipanggil.
+    if (!API_KEY) {
+        console.error("API_KEY is not set in environment variables. Please configure it.");
+        throw new Error("API key not configured. Please set it up in your environment variables.");
+    }
+
+    return new GoogleGenAI({ apiKey: API_KEY });
+};
+
+
 /**
  * Mengirimkan prompt ke model Gemini dan mengembalikan responsnya.
  * Fungsi ini menangani interaksi dengan Google GenAI API.
  * 
  * @param {string} prompt - Pertanyaan atau prompt dari pengguna.
  * @returns {Promise<string>} - Respons teks yang dihasilkan oleh model AI.
- * @throws {Error} - Melemparkan error jika panggilan API gagal.
  */
 export const askJokiAI = async (prompt: string): Promise<string> => {
   try {
+    const ai = getAIClient(); // Inisialisasi terjadi di sini, bukan saat modul dimuat
+
     // Memanggil model generateContent dengan konfigurasi yang telah ditentukan.
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
@@ -61,6 +70,10 @@ export const askJokiAI = async (prompt: string): Promise<string> => {
   } catch (error) {
     // Logging error yang lebih detail ke konsol untuk debugging.
     console.error("Error calling Gemini API:", error);
+    
+    if (error instanceof Error && error.message.includes("API key not configured")) {
+        return "Waduh, Joki AI sepertinya belum di-setup dengan benar (API Key hilang). Coba hubungi admin ya.";
+    }
     
     // Memberikan pesan error yang user-friendly.
     return "Waduh, Joki AI lagi ada gangguan teknis nih. Mungkin servernya lagi ngantuk. Coba tanya lagi beberapa saat ya!";

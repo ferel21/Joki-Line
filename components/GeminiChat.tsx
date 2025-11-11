@@ -8,26 +8,27 @@ import ExamplePrompts from './ExamplePrompts';
 
 const CHAT_HISTORY_KEY = 'joki_line_chat_history';
 
+/**
+ * Membaca riwayat chat dari localStorage saat komponen pertama kali dimuat.
+ * @returns {ChatMessageType[]} Riwayat chat yang tersimpan atau array kosong.
+ */
+const getInitialHistory = (): ChatMessageType[] => {
+    try {
+      const savedHistory = localStorage.getItem(CHAT_HISTORY_KEY);
+      return savedHistory ? JSON.parse(savedHistory) : [];
+    } catch (error) {
+      console.error("Failed to load chat history from localStorage", error);
+      return [];
+    }
+};
+
 const GeminiChat: React.FC = () => {
   const [prompt, setPrompt] = useState<string>('');
-  const [history, setHistory] = useState<ChatMessageType[]>([]);
+  const [history, setHistory] = useState<ChatMessageType[]>(getInitialHistory);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   
   const chatContainerRef = useRef<HTMLDivElement>(null);
-
-  // Load history from localStorage on initial render
-  useEffect(() => {
-    try {
-      const savedHistory = localStorage.getItem(CHAT_HISTORY_KEY);
-      if (savedHistory) {
-        setHistory(JSON.parse(savedHistory));
-      }
-    } catch (error) {
-      console.error("Failed to load chat history from localStorage", error);
-    }
-  }, []);
-
 
   // Save history to localStorage whenever it changes
   useEffect(() => {
@@ -47,7 +48,6 @@ const GeminiChat: React.FC = () => {
   
   const handleClearHistory = () => {
       setHistory([]);
-      // The useEffect for history will handle clearing localStorage
   }
 
   const handlePromptSelect = (selectedPrompt: string) => {
@@ -71,6 +71,7 @@ const GeminiChat: React.FC = () => {
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Terjadi kesalahan tidak diketahui.';
       setError(errorMessage);
+      // Menampilkan pesan error langsung di chat untuk UX yang lebih baik
       const modelErrorMessage: ChatMessageType = { role: 'model', content: errorMessage };
       setHistory(prev => [...prev, modelErrorMessage]);
     } finally {
