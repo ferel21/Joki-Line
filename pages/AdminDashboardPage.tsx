@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { ChatMessage as ChatMessageType } from '../types';
-import ChatMessage from '../components/ChatMessage';
+import ChatMessage from '../components/gemini-chat/ChatMessage';
 
 const CHAT_HISTORY_KEY = 'joki_line_chat_history';
 

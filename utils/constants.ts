@@ -34,3 +34,14 @@ export const createPackageOrderLink = (packageName: string): string => {
     const message = `Halo Joki Line, saya tertarik dengan paket *${packageName}*! Bisa tolong jelaskan lebih lanjut?`;
     return createWhatsAppLink(message);
 };
+
+/**
+ * Membuat tautan WhatsApp spesifik untuk pemesanan item layanan.
+ * @param {string} categoryName - Nama kategori layanan (e.g., 'Tugas Menulis').
+ * @param {string} serviceTitle - Judul spesifik layanan (e.g., 'Menulis (Tanpa Materi)').
+ * @returns {string} - URL lengkap untuk tautan WhatsApp pemesanan.
+ */
+export const createServiceItemOrderLink = (categoryName: string, serviceTitle: string): string => {
+    const message = `Halo Joki Line, saya tertarik dengan layanan *${categoryName}* untuk *${serviceTitle}*. Bisa tolong info lebih lanjut?`;
+    return createWhatsAppLink(message);
+};

@@ -4,10 +4,12 @@ import { INSTAGRAM_URL, DEFAULT_CONTACT_MESSAGE, createWhatsAppLink } from '../u
 import FooterColumn from './FooterColumn';
 
 const serviceLinks = [
-    { name: 'Paket Basic', href: '#/paket' },
-    { name: 'Paket Premium', href: '#/paket' },
-    { name: 'Paket Kilat', href: '#/paket' },
-    { name: 'Bantuan Skripsi', href: '#/paket' },
+    { name: 'Tugas Tulis & PPT', href: '#/paket' },
+    { name: 'Makalah & Analisis', href: '#/paket' },
+    { name: 'Tugas Coding', href: '#/paket' },
+    { name: 'Desain UI/UX', href: '#/paket' },
+    { name: 'Website Sederhana', href: '#/paket' },
+    { name: 'Tugas Kuliah Umum', href: '#/paket' },
 ];
 
 const companyLinks = [

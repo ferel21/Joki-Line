@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+// Fix: Import React namespace to resolve 'Cannot find namespace React' error for React.RefObject.
+import React, { useEffect, useRef, useState } from 'react';
 
 type ObserverOptions = {
     root?: Element | null;

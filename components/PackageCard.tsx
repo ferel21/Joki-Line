@@ -1,8 +1,5 @@
 import React from 'react';
-import type { Package } from '../types';
-import { StarIcon } from './Icons';
-import FeatureListItem from './FeatureListItem';
-import { createPackageOrderLink } from '../utils/constants';
+import type { ServiceCategory } from '../types';
 
 // Definisi kelas warna yang dapat digunakan kembali
 const colorClasses = {
@@ -15,59 +12,46 @@ const colorClasses = {
   }
 };
 
+interface PackageCardProps extends ServiceCategory {
+  onSelect: () => void;
+}
+
 /**
- * Komponen untuk menampilkan detail satu paket layanan.
- * Kartu ini menyoroti nama, harga, fitur, dan tombol ajakan bertindak (CTA).
- * Paket populer memiliki gaya visual yang berbeda.
+ * Komponen untuk menampilkan ringkasan satu kategori layanan.
+ * Kartu ini menampilkan ikon, nama, deskripsi, dan tombol untuk melihat detail harga.
+ * Didesain agar interaktif saat di-hover.
  */
-const PackageCard: React.FC<Package> = ({ name, price, description, features, isPopular, color }) => {
+const PackageCard: React.FC<PackageCardProps> = ({ name, icon, description, color, ctaText, onSelect }) => {
   const selectedColor = colorClasses[color];
-  const whatsappLink = createPackageOrderLink(name);
 
   return (
     <div className={`
-      relative flex flex-col bg-brand-gray/80 backdrop-blur-sm border border-brand-light-gray/50 rounded-xl p-8 
-      transform transition-all duration-300 hover:scale-105 hover:border-brand-cyan
-      ${isPopular ? `border-2 ${selectedColor.border} animate-glow` : ''}
+      flex flex-col bg-brand-gray/80 backdrop-blur-sm border border-brand-light-gray/50 rounded-xl p-6
+      transform transition-all duration-300 hover:scale-[1.03] hover:border-brand-cyan hover:shadow-2xl hover:shadow-brand-cyan/20
     `}>
-      {/* Lencana 'Paling Laris' untuk paket populer */}
-      {isPopular && (
-        <div className="absolute top-0 -translate-y-1/2 w-full flex justify-center" aria-hidden="true">
-            <div className={`inline-flex items-center ${selectedColor.bg} text-white text-sm font-semibold px-4 py-1 rounded-full shadow-lg`}>
-                <StarIcon className="w-4 h-4 mr-1.5"/>
-                Paling Laris
-            </div>
-        </div>
-      )}
-      
       <div className="flex-grow">
-        {/* Nama dan Harga Paket */}
-        <h3 className={`text-2xl font-bold font-brand tracking-wider ${selectedColor.text}`}>{name}</h3>
-        <p className="mt-4">
-          <span className="text-5xl font-extrabold text-white">{price}</span>
-          <span className="text-lg font-medium text-gray-400">/tugas</span>
-        </p>
-        <p className="mt-2 text-sm text-gray-400 h-10">{description}</p>
+        {/* Header: Icon dan Nama */}
+        <div className="flex items-center gap-4 mb-4">
+            <div className="flex-shrink-0 bg-brand-light-gray p-3 rounded-lg border border-brand-light-gray/80">
+                {icon}
+            </div>
+            <h3 className={`text-xl font-bold font-brand tracking-wider ${selectedColor.text}`}>{name}</h3>
+        </div>
+
+        {/* Deskripsi */}
+        <p className="text-sm text-gray-400 min-h-[60px]">{description}</p>
         
-        {/* Daftar Fitur Paket */}
-        <ul className="mt-8 space-y-4">
-          {features.map((feature, index) => (
-            <FeatureListItem key={index} feature={feature} colorClass={selectedColor.text} />
-          ))}
-        </ul>
       </div>
       
-      {/* Tombol Aksi (Pilih Paket) */}
-      <div className="mt-10">
-        <a 
-          href={whatsappLink} 
-          target="_blank" 
-          rel="noopener noreferrer" 
+      {/* Tombol Aksi */}
+      <div className="mt-8">
+        <button
+          onClick={onSelect}
           className={`w-full text-center block ${selectedColor.bg} text-white font-bold py-3 px-6 rounded-lg text-lg ${selectedColor.hoverBg} transition-colors duration-300 transform hover:scale-105`}
-          aria-label={`Pilih paket ${name}`}
+          aria-label={`Lihat opsi harga untuk ${name}`}
         >
-          Pilih Paket
-        </a>
+          {ctaText}
+        </button>
       </div>
     </div>
   );

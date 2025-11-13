@@ -4,16 +4,17 @@ import { INSTAGRAM_URL, DEFAULT_CONTACT_MESSAGE, createWhatsAppLink } from '../.
 import FooterColumn from './FooterColumn';
 
 const serviceLinks = [
-    { name: 'Paket Basic', href: '#paket' },
-    { name: 'Paket Premium', href: '#paket' },
-    { name: 'Paket Kilat', href: '#paket' },
-    { name: 'Bantuan Skripsi', href: '#paket' },
+    { name: 'Tugas Menulis', href: '#/paket' },
+    { name: 'Tugas PPT', href: '#/paket' },
+    { name: 'Makalah & Artikel', href: '#/paket' },
+    { name: 'Analisis Sentimen', href: '#/paket' },
+    { name: 'Website & UI/UX', href: '#/paket' },
 ];
 
 const companyLinks = [
     { name: 'Tentang Kami', href: '#' },
-    { name: 'Cara Kerja', href: '#cara-kerja' },
-    { name: 'Testimoni', href: '#testimoni' },
+    { name: 'Cara Kerja', href: '#/cara-kerja' },
+    { name: 'Testimoni', href: '#/testimoni' },
 ];
 
 const legalLinks = [
@@ -53,7 +54,11 @@ const Footer: React.FC = () => {
 
         {/* Bagian Hak Cipta */}
         <div className="mt-12 border-t border-brand-light-gray pt-8 text-center">
-            <p className="text-sm text-gray-500">&copy; {new Date().getFullYear()} Joki Line. All Rights Reserved. Dibuat dengan &hearts; untuk para pejuang deadline.</p>
+            <p className="text-sm text-gray-500">
+              &copy; {new Date().getFullYear()} Joki Line. All Rights Reserved. Dibuat dengan &hearts; untuk para pejuang deadline.
+              <span className="mx-2">|</span>
+              <a href="#/admin" className="hover:text-brand-cyan transition-colors">Admin</a>
+            </p>
         </div>
       </div>
     </footer>

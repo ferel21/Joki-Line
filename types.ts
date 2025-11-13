@@ -1,32 +1,36 @@
+import type { ReactNode } from 'react';
+
 /**
- * Interface untuk mendefinisikan fitur dalam sebuah paket.
- * @property text - Deskripsi fitur.
- * @property available - Status ketersediaan fitur (true jika tersedia, false jika tidak).
+ * Interface untuk mendefinisikan item layanan dalam sebuah kategori.
+ * @property title - Nama layanan spesifik.
+ * @property price - Harga layanan dalam bentuk string.
+ * @property description - Deskripsi tambahan (opsional).
  */
-export interface PackageFeature {
-  text: string;
-  available: boolean;
+export interface ServiceItem {
+  title: string;
+  price: string;
+  description?: string;
 }
 
 /**
- * Interface untuk mendefinisikan struktur sebuah paket layanan.
- * @property name - Nama paket (e.g., 'Basic', 'Premium').
- * @property price - Tampilan harga dalam bentuk string (e.g., '40k').
- * @property priceValue - Nilai numerik harga untuk pemrosesan lebih lanjut.
- * @property description - Deskripsi singkat mengenai target pengguna paket.
- * @property features - Array dari objek PackageFeature yang berisi detail fitur paket.
- * @property isPopular - Menandakan apakah paket ini adalah pilihan populer.
- * @property color - Skema warna yang digunakan untuk branding paket.
+ * Interface untuk mendefinisikan kategori layanan.
+ * @property name - Nama kategori layanan (e.g., 'Tugas Menulis').
+ * @property icon - Komponen React yang berfungsi sebagai ikon untuk kategori.
+ * @property description - Deskripsi singkat mengenai kategori layanan.
+ * @property items - Array dari objek ServiceItem yang berisi detail layanan.
+ * @property color - Skema warna yang digunakan untuk branding.
+ * @property ctaText - Teks untuk tombol ajakan bertindak (Call to Action).
  */
-export interface Package {
+export interface ServiceCategory {
   name: string;
-  price: string;
-  priceValue: number;
+  // Fix: Use imported ReactNode type instead of React.ReactNode to resolve namespace error.
+  icon: ReactNode;
   description: string;
-  features: PackageFeature[];
-  isPopular: boolean;
+  items: ServiceItem[];
   color: 'brand-cyan';
+  ctaText: string;
 }
+
 
 /**
  * Interface untuk mendefinisikan struktur data testimoni pelanggan.
@@ -51,7 +55,8 @@ export interface Testimonial {
  * @property description - Deskripsi singkat dari langkah tersebut.
  */
 export interface HowItWorksStep {
-    icon: React.ReactNode;
+    // Fix: Use imported ReactNode type instead of React.ReactNode to resolve namespace error.
+    icon: ReactNode;
     title: string;
     description: string;
 }
@@ -70,4 +75,35 @@ export type ChatRole = 'user' | 'model';
 export interface ChatMessage {
   role: ChatRole;
   content: string;
+}
+
+// Fix: Add missing type definitions for Package and PackageFeature.
+/**
+ * Interface untuk mendefinisikan sebuah fitur dalam paket layanan.
+ * @property text - Deskripsi fitur.
+ * @property available - Status ketersediaan fitur.
+ */
+export interface PackageFeature {
+  text: string;
+  available: boolean;
+}
+
+/**
+ * Interface untuk mendefinisikan struktur sebuah paket layanan.
+ * @property name - Nama paket.
+ * @property price - Harga dalam bentuk string (e.g., '40k').
+ * @property priceValue - Nilai numerik dari harga.
+ * @property description - Deskripsi singkat paket.
+ * @property features - Array dari objek PackageFeature.
+ * @property isPopular - Menandakan apakah paket ini populer.
+ * @property color - Skema warna yang digunakan.
+ */
+export interface Package {
+  name: string;
+  price: string;
+  priceValue: number;
+  description: string;
+  features: PackageFeature[];
+  isPopular: boolean;
+  color: 'brand-cyan';
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
 import HomePage from './pages/HomePage';
 import PackagesPage from './pages/PackagesPage';
 import HowItWorksPage from './pages/HowItWorksPage';
@@ -9,53 +9,69 @@ import TestimonialsPage from './pages/TestimonialsPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 
-// Gunakan environment variable untuk password, dengan fallback untuk development
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+// Kata sandi admin yang di-hardcode untuk kesederhanaan
+const ADMIN_PASSWORD = 'password123';
 
 /**
  * Komponen utama aplikasi Joki Line.
- * Bertanggung jawab untuk menyusun tata letak halaman utama
- * dan merender halaman yang sesuai berdasarkan routing.
+ * Bertanggung jawab untuk routing sisi klien berbasis hash
+ * dan merender halaman yang sesuai.
  */
 const App: React.FC = () => {
-  // Menggunakan window.location.hash untuk routing sisi klien sederhana
-  const [route, setRoute] = useState(window.location.hash || '#/');
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean>(
-    () => !!sessionStorage.getItem('isAdminAuthenticated')
-  );
+  const [route, setRoute] = useState<string>(window.location.hash || '#/');
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(false);
 
+  // Efek untuk mendengarkan perubahan hash di URL
   useEffect(() => {
     const handleHashChange = () => {
       setRoute(window.location.hash || '#/');
-      window.scrollTo(0, 0); // Selalu scroll ke atas saat halaman berganti
+      window.scrollTo(0, 0); // Gulir ke atas saat halaman berubah
     };
 
     window.addEventListener('hashchange', handleHashChange);
     
-    // Cleanup event listener saat komponen unmount
+    // Panggil sekali saat mount untuk mengatur rute awal
+    handleHashChange();
+
+    // Cleanup listener saat komponen unmount
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
     };
   }, []);
 
+  /**
+   * Menangani upaya login admin.
+   * @param {string} password - Kata sandi yang dimasukkan.
+   * @returns {boolean} - True jika login berhasil, false jika gagal.
+   */
   const handleLogin = (password: string): boolean => {
     if (password === ADMIN_PASSWORD) {
-      sessionStorage.setItem('isAdminAuthenticated', 'true');
-      setIsAdminAuthenticated(true);
+      setIsAdminLoggedIn(true);
       return true;
     }
     return false;
   };
 
+  /**
+   * Menangani logout admin.
+   */
   const handleLogout = () => {
-    sessionStorage.removeItem('isAdminAuthenticated');
-    setIsAdminAuthenticated(false);
+    setIsAdminLoggedIn(false);
     // Arahkan kembali ke halaman utama setelah logout
     window.location.hash = '#/';
   };
 
-  // Fungsi untuk merender komponen halaman yang sesuai
+  /**
+   * Merender komponen halaman yang benar berdasarkan rute saat ini dan status login.
+   * @returns {React.ReactElement} - Komponen halaman yang akan dirender.
+   */
   const renderPage = () => {
+    if (route.startsWith('#/admin')) {
+      return isAdminLoggedIn 
+        ? <AdminDashboardPage onLogout={handleLogout} />
+        : <AdminLoginPage onLogin={handleLogin} />;
+    }
+
     switch (route) {
       case '#/paket':
         return <PackagesPage />;
@@ -65,18 +81,12 @@ const App: React.FC = () => {
         return <AskJokiPage />;
       case '#/testimoni':
         return <TestimonialsPage />;
-      case '#/admin':
-        return isAdminAuthenticated ? (
-          <AdminDashboardPage onLogout={handleLogout} />
-        ) : (
-          <AdminLoginPage onLogin={handleLogin} />
-        );
       case '#/':
       default:
         return <HomePage />;
     }
   };
-  
+
   return (
     <div className="bg-brand-dark min-h-screen font-sans text-gray-300 flex flex-col">
       <Header />
